@@ -1,7 +1,7 @@
 name: Android Build
 
 on:
-  push:
+  commit:
     branches:
       - master
 
