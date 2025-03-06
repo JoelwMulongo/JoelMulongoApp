@@ -12,22 +12,25 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set Up JDK
-        uses: actions/setup-java@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v8
         with:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Generate Gradle Wrapper (if missing)
+        run: gradle wrapper || ./gradlew wrapper
+
       - name: Grant Execute Permission for Gradlew
         run: chmod +x gradlew
 
-      - name: Build APK
+      - name: Build Debug APK
         run: ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
+          name: app-debug
           path: app/build/outputs/apk/debug/app-debug.apk
